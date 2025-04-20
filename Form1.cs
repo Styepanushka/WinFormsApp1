@@ -23,7 +23,7 @@ partial class MyForm : Form
         for (int i = 1; i < 4; i++)
         {
             pos.X = 10;
-       
+
             for (int j = 0; j < 3; j++)
             {
                 Button myButton = new Button();
@@ -35,14 +35,14 @@ partial class MyForm : Form
                 myButton.Click += new EventHandler(NumberButtonCLicked);
                 pos.X += 50;
                 Controls.Add(myButton);
-                
+
             }
             pos.Y -= 50;
         }
 
         pos.Y = 200;
 
-        foreach(var i in "+-*/")
+        foreach (var i in "+-*/")
         {
             Button myButton = new Button();
             myButton.Text = i.ToString();
@@ -54,6 +54,10 @@ partial class MyForm : Form
             pos.Y -= 50;
             Controls.Add(myButton);
         }
+
+        pos.X += 50;
+        pos.Y += 10;
+
         Button EqualButton = new Button();
         EqualButton.Text = "=";
         EqualButton.Location = pos; // Позиция на форме
@@ -73,6 +77,18 @@ partial class MyForm : Form
         tb.Size = new Size(200, 50);
 
         Controls.Add(tb);
+
+        pos.X = 200;
+        pos.Y = 200;
+
+        Button Del = new Button();
+        Del.Text = "X";
+        Del.Location = pos; // Позиция на форме
+        Del.Size = new Size(40, 40); // Размеры
+
+        // Добавляем обработчик нажатия
+        Del.Click += new EventHandler(DelButtonCLicked);
+        Controls.Add(Del);
     }
 
     private void NumberButtonCLicked(object sender, EventArgs e)
@@ -85,5 +101,17 @@ partial class MyForm : Form
         DataTable dt = new DataTable();
 
         tb.Text = dt.Compute(tb.Text, "").ToString();
+    }
+
+    private void DelButtonCLicked(object sender, EventArgs e)
+    {
+        try
+        {
+            tb.Text = tb.Text.Remove(tb.Text.Length - 1);
+        }
+        catch 
+        {
+            return;
+        }
     }
 }
